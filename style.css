@@ -5,11 +5,11 @@ body {
   color: white;
 }
 
-h1 {font-size: 4vw;}
-p {font-size: 2vw;}
+h1 {font-size: 6vh;}
+p {font-size: 3vh;}
 
 #content p {
-  font-size: 1vw;
+  font-size: 2vh;
   text-align:center;
 }
 
