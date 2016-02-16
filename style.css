@@ -1,0 +1,22 @@
+body {
+  background-color: black;
+  background-image: url("aur.jpg");
+  font-family: 'Roboto Mono' ;
+  color: white;
+}
+
+h1 {font-size: 4vw;}
+p {font-size: 2vw;}
+
+#content p {
+  font-size: 1vw;
+  text-align:center;
+}
+
+#container{
+  text-align:center;
+}
+
+#header {
+  margin-bottom: 50px;
+}
