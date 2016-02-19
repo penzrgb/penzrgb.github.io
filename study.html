@@ -26,8 +26,9 @@
             dataType: 'application/json',
             complete: function(data){
               console.log('complete');
-              for (var i = 0; i < data.courses.length; i++) {
-                $('#content').append('<p>' + data.courses[i].title + '</p>');
+              var dataObject = JSON.parse(data.responseObject);
+              for (var i = 0; i < dataObject.courses.length; i++) {
+                $('#content').append('<p>' + dataObject.courses[i].title + '</p>');
               }
             },
             success: function(data){
