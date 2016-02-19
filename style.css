@@ -1,20 +1,30 @@
 body {
   background-color: black;
   background-image: url("aur.jpg");
+}
+
+h1 {
+  font-size: 6vh;
   font-family: 'Roboto Mono' ;
   color: white;
 }
-
-h1 {font-size: 6vh;}
-p {font-size: 3vh;}
+p {
+  font-size: 3vh;
+  font-family: 'Roboto Mono' ;
+  color: white;
+}
 
 #content p {
   font-size: 2vh;
   text-align:center;
   margin-top: 50px;
   margin-bottom: 50px;
+  font-family: 'Roboto Mono' ;
+  color: white;
 }
 
 #container{
   text-align:center;
+  font-family: 'Roboto Mono' ;
+  color: white;
 }
