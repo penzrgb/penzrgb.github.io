@@ -29,7 +29,7 @@
               var dataObject = JSON.parse(data.responseText);
               for (var i = 0; i < dataObject.courses.length; i++) {
                 $('#content').append('<p>' + dataObject.courses[i].title + '</p>');
-                $('#content').append('<div class="progress">' +
+                $('#content').append('<div class="progress center-block" style="width: 50%;">' +
                     '<div class="progress-bar" role="progressbar" aria-valuenow="' +
                     dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
                     'aria-valuemax="' + dataObject.courses[i].maxHours + 
