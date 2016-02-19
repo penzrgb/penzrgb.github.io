@@ -26,7 +26,7 @@
             dataType: 'application/json',
             complete: function(data){
               console.log('complete');
-              var dataObject = JSON.parse(data.responseObject);
+              var dataObject = JSON.parse(data.responseText);
               for (var i = 0; i < dataObject.courses.length; i++) {
                 $('#content').append('<p>' + dataObject.courses[i].title + '</p>');
               }
