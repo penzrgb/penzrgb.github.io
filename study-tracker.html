@@ -30,13 +30,18 @@
       <p>Task Name: <input type="text" /></p>
       <p>Task Description: <textarea></textarea></p>
       <p>Self Study: <input type="checkbox" /></p>
-      <a id="startEntryTimer" href="#" class="btn btn-success" role="button">Start Entry Timer</a>
 
+      <h2 id="countdownTimer">00:00:00</h2>
+
+      <a id="startEntryTimer" href="#" class="btn btn-success" role="button">Start Entry Timer</a>
       <a id="cancelTask" href="#" class="btn btn-danger" role="button">Cancel</a>
     </div>
   </div>
 
   <script type="text/javascript">
+    var dateStarted;
+    var entryInterval;
+
     $.ajax({
           url: 'http://rodger.io/course-list.html',
           dataType: 'application/json',
@@ -70,6 +75,30 @@
           $('#addNewEntryView').css('display', 'none');
         });
 
+      $('#startEntryTimer').click(function() {
+        if (entryInterval == null) {
+          dateStarted = new Date();
+          entryInterval = setInterval(function() {
+            var seconds = Math.floor((new Date() - dateStarted) / 1000);
+            var interval = Math.floor(seconds / 31536000);
+            interval = Math.floor(seconds / 2592000);
+            interval = Math.floor(seconds / 86400);
+            interval = Math.floor(seconds / 3600);
+            var hours = interval;
+            interval = Math.floor(seconds / 60);
+            var minutes = interval % 60;
+            var seconds = Math.floor(seconds) % 60;
+
+            $("#countdownTimer").html(pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2));
+          }, 1000);
+        }
+      });
+
+      function pad(n, width, z) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+      }
     </script>
   </body>
 </html>
