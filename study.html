@@ -16,31 +16,29 @@
 <body>
   <div id="container">
     <div id="header">
-      <h1>Hi, I'm Rodger!</h1>
-      <p>I hope to improve on this amazing world using science and technology.</p>
-      <p>я учусь России</p>
+      <h1>Study Tracking Tool</h1>
     </div>
 
     <div id="content">
+      <script type="text/javascript">
+        $.ajax({
+            url: 'http://rodger.io/aux.html',
+            dataType: 'application/json',
+            complete: function(data){
+              console.log('complete');
+              for (var i = 0; i < data.courses.length; i++) {
+                $('#content').append('<p>' + data.courses[i].title + '</p>');
+              }
+            },
+            success: function(data){
+              console.log(data);
+            }
+          });
+      </script>
+
       <p>&bullet; Previously worked as a Software Engineer</p>
       <p>&bullet; Now pursuing a Bachelor's degree in Science at the University of Melbourne</p>
       <p>&bullet; Also finishing off Bachelor's degree in Technology (Computing Studies) at RMIT University to potentially complement any future roles</p>
     </div>
-
-    <a href="study.html" class="btn btn-primary" role="button">Study Tracking Tool</a>
-  </div>
-
-  <script type="text/javascript">
-    $.ajax({
-        url: 'http://rodger.io/aux.html',
-        dataType: 'application/json',
-        complete: function(data){
-            console.log(data);
-        },
-        success: function(data){
-            console.log(data);
-        }
-      });
-  </script>
-</body>
+  </body>
 </html>
