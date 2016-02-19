@@ -29,6 +29,12 @@
               var dataObject = JSON.parse(data.responseText);
               for (var i = 0; i < dataObject.courses.length; i++) {
                 $('#content').append('<p>' + dataObject.courses[i].title + '</p>');
+                $('#content').append('<div class="progress">' +
+                    '<div class="progress-bar" role="progressbar" aria-valuenow="' +
+                    dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
+                    'aria-valuemax="' + dataObject.courses[i].maxHours + 
+                    '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%>' +
+                    '<span class="sr-only">Hours</span></div></div>');
               }
             },
             success: function(data){
@@ -36,10 +42,6 @@
             }
           });
       </script>
-
-      <p>&bullet; Previously worked as a Software Engineer</p>
-      <p>&bullet; Now pursuing a Bachelor's degree in Science at the University of Melbourne</p>
-      <p>&bullet; Also finishing off Bachelor's degree in Technology (Computing Studies) at RMIT University to potentially complement any future roles</p>
     </div>
   </body>
 </html>
