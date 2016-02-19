@@ -11,12 +11,10 @@ p {font-size: 3vh;}
 #content p {
   font-size: 2vh;
   text-align:center;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 #container{
   text-align:center;
-}
-
-#header {
-  margin-bottom: 50px;
 }
