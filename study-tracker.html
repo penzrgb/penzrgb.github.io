@@ -78,6 +78,11 @@
       $('#startEntryTimer').click(function() {
         if (entryInterval == null) {
           dateStarted = new Date();
+
+          $('#startEntryTimer').removeClass('btn-success');
+          $('#startEntryTimer').addClass('btn-info');
+          $('#startEntryTimer').html('Stop and save record');
+
           entryInterval = setInterval(function() {
             var seconds = Math.floor((new Date() - dateStarted) / 1000);
             var interval = Math.floor(seconds / 31536000);
@@ -91,6 +96,15 @@
 
             $("#countdownTimer").html(pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2));
           }, 1000);
+        }
+        else 
+        {
+          $('#startEntryTimer').removeClass('btn-info');
+          $('#startEntryTimer').addClass('btn-success');
+          $('#startEntryTimer').html('Start Entry Timer');
+
+          clearInterval(entryInterval);
+          entryInterval = null;
         }
       });
 
