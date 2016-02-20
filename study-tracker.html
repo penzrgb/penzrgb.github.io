@@ -27,14 +27,18 @@
 
     <div id="addNewEntryView" class="content" style="display:none">
       <p>Class Title: <select id="classTitleSelect" name="classTitleSelect"></select></p>
-      <p>Task Name: <input type="text" /></p>
-      <p>Task Description: <textarea></textarea></p>
-      <p>Self Study: <input type="checkbox" /></p>
+      <p>Task Name: <input id="taskNameText" type="text" /></p>
+      <p>Task Description: <textarea id="taskDescriptionText"></textarea></p>
+      <p>Self Study: <input id="selfStudyCheckbox" type="checkbox" /></p>
 
       <h2 id="countdownTimer">00:00:00</h2>
 
       <a id="startEntryTimer" href="#" class="btn btn-success" role="button">Start Entry Timer</a>
-      <a id="cancelTask" href="#" class="btn btn-danger" role="button">Cancel</a>
+      <a href="#" class="cancelTask btn btn-danger" role="button">Cancel</a>
+    </div>
+
+    <div id="unsavedLocalDataView" class="content" style="display:none">
+      <a href="#" class="cancelTask btn btn-danger" role="button">Cancel</a>
     </div>
   </div>
 
@@ -80,12 +84,25 @@
 
       $('#addNewEntryButton').click(function() {
           $('#progressView').css('display', 'none');
+          $('#unsavedLocalDataView').css('display', 'none');
           $('#addNewEntryView').css('display', 'block');
         });
 
-      $('#cancelTask').click(function() {
+      $('#unsavedEntriesButton').click(function() {
+          $('#progressView').css('display', 'none');
+          $('#addNewEntryView').css('display', 'none');
+
+          // Clear out the old contents.
+          //$('#unsavedLocalDataView').html('');
+
+          $('#unsavedLocalDataView').css('display', 'block');
+        });
+
+
+      $('.cancelTask').click(function() {
           $('#progressView').css('display', 'block');
           $('#addNewEntryView').css('display', 'none');
+          $('#unsavedLocalDataView').css('display', 'none');
         });
 
       $('#startEntryTimer').click(function() {
