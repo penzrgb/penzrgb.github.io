@@ -18,7 +18,7 @@
     <div id="header">
       <h1>Study Tracking Tool</h1>
       <a id="addNewEntryButton" href="#" class="btn btn-success" role="button">Add New Entry</a>
-      <a href="#" class="btn btn-info" role="button">Unsaved Local Data (2)</a>
+      <a id="unsavedEntriesButton" href="#" class="btn btn-info" role="button" style="display: none;">Unsaved Local Data</a>
     </div>
 
     <div id="progressView" class="content">
@@ -41,6 +41,7 @@
   <script type="text/javascript">
     var dateStarted;
     var entryInterval;
+    var unsavedItems = 3;
 
     $.ajax({
           url: 'http://rodger.io/course-list.html',
@@ -57,7 +58,16 @@
                   '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
                   '<span class="sr-only">Hours</span></div></div>');
 
-              $('#classTitleSelect').append($('<option>').text(dataObject.courses[i].title).attr('value', dataObject.courses[i].title));
+              $('#classTitleSelect').append($('<option>').text(dataObject.courses[i].title).attr('value', dataObject.courses[i].id));
+
+              if (unsavedItems > 0) {
+                $('#unsavedEntriesButton').html('Unsaved Local Data (' + unsavedItems.toString() + ')');
+                $('#unsavedEntriesButton').css('display', 'inline-block');
+              }
+              else
+              {
+                $('#unsavedEntriesButton').css('display', 'none');
+              }
             }
           },
           success: function(data){
@@ -105,6 +115,17 @@
 
           clearInterval(entryInterval);
           entryInterval = null;
+          unsavedItems++;
+
+          if (unsavedItems > 0) {
+            $('#unsavedEntriesButton').html('Unsaved Local Data (' + unsavedItems.toString() + ')');
+            $('#unsavedEntriesButton').css('display', 'inline-block');
+          }
+          else
+          {
+            $('#unsavedEntriesButton').css('display', 'none');
+          }
+
         }
       });
 
