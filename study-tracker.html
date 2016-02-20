@@ -58,7 +58,10 @@
                   '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
                   '<span class="sr-only">Hours</span></div></div>');
 
-              $('#classTitleSelect').append($('<option>').text(dataObject.courses[i].title).attr('value', dataObject.courses[i].id));
+              $('#classTitleSelect').append($('<option>', {
+                value: dataObject.courses[i].id,
+                text: dataObject.courses[i].title
+              }));
 
               if (unsavedItems > 0) {
                 $('#unsavedEntriesButton').html('Unsaved Local Data (' + unsavedItems.toString() + ')');
