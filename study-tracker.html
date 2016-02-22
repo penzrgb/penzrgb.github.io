@@ -212,9 +212,9 @@
               continue;
 
             for (var j = 0; j < cachedLogList[i].logs.length; j++) {
-              if (cachedLogList[j].courseId == id) {
-                var dateStarted = new Date(cachedLogList[j].dateStarted);
-                var dateEnded = new Date(cachedLogList[j].dateEnded);
+              if (cachedLogList[i].logs[j].courseId == id) {
+                var dateStarted = new Date(cachedLogList[i].logs[j].dateStarted);
+                var dateEnded = new Date(cachedLogList[i].logs[j].dateEnded);
                 var diff = dateEnded.getTime() - dateStarted.getTime();
                 seconds += Math.abs(diff / 1000);
               }
