@@ -32,7 +32,7 @@
     <div id="addNewEntryView" class="content" style="display:none">
       <p>Class Title: <select id="classTitleSelect" name="classTitleSelect"></select></p>
       <p>Task Name: <input id="taskNameText" type="text" /></p>
-      <p>Task Description: <textarea id="taskDescriptionText"></textarea></p>
+      <p class="formfield"><label for="taskDescriptionText">Task Description:</label> <textarea id="taskDescriptionText"></textarea></p>
       <p>Self Study: <input id="selfStudyCheckbox" type="checkbox" /></p>
 
       <h2 id="countdownTimer">00:00:00</h2>
@@ -66,69 +66,83 @@
     var entryInterval;
     var unsavedItems = 0;
     var cachedCourseList = null;
+    var cachedLogList = null;
 
     $.ajax({
-          url: 'http://rodger.io/course-list.html',
+          url: 'http://rodger.io/logs.html',
           dataType: 'application/json',
           complete: function(data){
             console.log('complete');
             var dataObject = JSON.parse(data.responseText);
-            cachedCourseList = dataObject;
+            cachedLogList = dataObject;
 
-            for (var i = 0; i < dataObject.students.length; i++) {
-              $('#studentNameSelect').append($('<option>', {
-                value: dataObject.students[i].id,
-                text: dataObject.students[i].name
-              }));
-            }
+            $.ajax({
+              url: 'http://rodger.io/course-list.html',
+              dataType: 'application/json',
+              complete: function(data){
+                console.log('complete');
+                var dataObject = JSON.parse(data.responseText);
+                cachedCourseList = dataObject;
 
-            for (var i = 0; i < dataObject.courses.length; i++) {
-              $('#progressView').append('<div class="courseInfoContainer"><div class="courseTitleBlock">' + dataObject.courses[i].title + '</div>' +
-              '<div class="courseInfoBlock">' + 
-              '<div class="courseInfoBarBlock">Hours Logged: <div class="progress center-block" style="width: 50%;">' +
-                '<div class="progress-bar" role="progressbar" aria-valuenow="' +
-                dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
-                'aria-valuemax="' + dataObject.courses[i].maxHours + 
-                '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
-                '<span class="sr-only">Hours</span></div></div></div>' + 
-                '<div class="courseInfoBarBlock">Average Grade: <div class="progress center-block" style="width: 50%;">' +
-                '<div class="progress-bar" role="progressbar" aria-valuenow="' +
-                dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
-                'aria-valuemax="' + dataObject.courses[i].maxHours + 
-                '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
-                '<span class="sr-only">Hours</span></div></div></div>' + 
-                '<div class="courseInfoBarBlock">Total Grade: <div class="progress center-block" style="width: 50%;">' +
-                '<div class="progress-bar" role="progressbar" aria-valuenow="' +
-                dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
-                'aria-valuemax="' + dataObject.courses[i].maxHours + 
-                '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
-                '<span class="sr-only">Hours</span></div></div></div>' + 
+                for (var i = 0; i < dataObject.students.length; i++) {
+                  $('#studentNameSelect').append($('<option>', {
+                    value: dataObject.students[i].id,
+                    text: dataObject.students[i].name
+                  }));
+                }
 
-                '</div></div>');
+                for (var i = 0; i < dataObject.courses.length; i++) {
+                  $('#progressView').append('<div class="courseInfoContainer"><div class="courseTitleBlock">' + dataObject.courses[i].title + '</div>' +
+                  '<div class="courseInfoBlock">' + 
+                  '<div class="courseInfoBarBlock">Hours Logged: <div class="progress center-block" style="width: 50%;">' +
+                    '<div class="progress-bar" role="progressbar" aria-valuenow="' +
+                    dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
+                    'aria-valuemax="' + dataObject.courses[i].maxHours + 
+                    '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
+                    '<span class="sr-only">Hours</span></div></div></div>' + 
+                    '<div class="courseInfoBarBlock">Average Grade: <div class="progress center-block" style="width: 50%;">' +
+                    '<div class="progress-bar" role="progressbar" aria-valuenow="' +
+                    dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
+                    'aria-valuemax="' + dataObject.courses[i].maxHours + 
+                    '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
+                    '<span class="sr-only">Hours</span></div></div></div>' + 
+                    '<div class="courseInfoBarBlock">Total Grade: <div class="progress center-block" style="width: 50%;">' +
+                    '<div class="progress-bar" role="progressbar" aria-valuenow="' +
+                    dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
+                    'aria-valuemax="' + dataObject.courses[i].maxHours + 
+                    '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
+                    '<span class="sr-only">Hours</span></div></div></div>' + 
 
-              $('#classTitleSelect').append($('<option>', {
-                value: dataObject.courses[i].id,
-                text: dataObject.courses[i].title
-              }));
+                    '</div></div>');
 
-              if ('localStorage' in window && window['localStorage'] !== null && 
-                $('#studentNameSelect').val() !== null &&
-                localStorage.getItem($('#studentNameSelect').val()) != null &&
-                (unsavedItems = JSON.parse(localStorage.getItem($('#studentNameSelect').val())).length) > 0) {
-                $('#unsavedEntriesButton').html('Unsaved Local Data (' + unsavedItems.toString() + ')');
-                $('#unsavedEntriesButton').css('display', 'inline-block');
+                  $('#classTitleSelect').append($('<option>', {
+                    value: dataObject.courses[i].id,
+                    text: dataObject.courses[i].title
+                  }));
+
+                  if ('localStorage' in window && window['localStorage'] !== null && 
+                    $('#studentNameSelect').val() !== null &&
+                    localStorage.getItem($('#studentNameSelect').val()) != null &&
+                    (unsavedItems = JSON.parse(localStorage.getItem($('#studentNameSelect').val())).length) > 0) {
+                    $('#unsavedEntriesButton').html('Unsaved Local Data (' + unsavedItems.toString() + ')');
+                    $('#unsavedEntriesButton').css('display', 'inline-block');
+                  }
+                  else
+                  {
+                    $('#unsavedEntriesButton').css('display', 'none');
+                  }
+                }
+              },
+              success: function(data){
+                console.log(data);
               }
-              else
-              {
-                $('#unsavedEntriesButton').css('display', 'none');
-              }
-            }
-          },
-          success: function(data){
-            console.log(data);
+            });
+
           }
-        });
+    });
 
+
+    
       $('#addNewEntryButton').click(function() {
           $('#progressView').css('display', 'none');
           $('#unsavedLocalDataView').css('display', 'none');

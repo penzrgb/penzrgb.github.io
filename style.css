@@ -9,10 +9,14 @@ h1 {
   color: white;
 }
 
-p {
+p, span {
   font-size: 3vh;
   font-family: 'Roboto Mono' ;
   color: white;
+}
+
+.formfield * {
+  vertical-align: middle;
 }
 
 table td {
