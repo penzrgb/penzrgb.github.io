@@ -106,15 +106,15 @@
                     '<span class="sr-only">Hours</span></div></div></div>' + 
                     '<div class="courseInfoBarBlock">Average Grade: <div class="progress center-block" style="width: 50%;">' +
                     '<div class="progress-bar" role="progressbar" aria-valuenow="' +
-                    dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
+                    dataObject.courses[i].maxHours + '" aria-valuemin="0"' +
                     'aria-valuemax="' + dataObject.courses[i].maxHours + 
-                    '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
+                    '" style="width: ' + (( dataObject.courses[i].maxHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
                     '<span class="sr-only">Hours</span></div></div></div>' + 
                     '<div class="courseInfoBarBlock">Total Grade: <div class="progress center-block" style="width: 50%;">' +
                     '<div class="progress-bar" role="progressbar" aria-valuenow="' +
-                    dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
+                    dataObject.courses[i].maxHours + '" aria-valuemin="0"' +
                     'aria-valuemax="' + dataObject.courses[i].maxHours + 
-                    '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
+                    '" style="width: ' + (( dataObject.courses[i].maxHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
                     '<span class="sr-only">Hours</span></div></div></div>' + 
 
                     '</div></div>');
