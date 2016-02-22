@@ -60,7 +60,8 @@
       </table>
 
       <textarea id="copyPasteLocalStorage"></textarea><br />
-
+      
+      <a id="clearLocalStorageButton" class="btn btn-warning" role="button">Clear Local Data</a>
       <a href="#" class="cancelTask btn btn-danger" role="button">Cancel</a>
     </div>
   </div>
@@ -182,7 +183,12 @@
           }
     });
 
-
+      $('#clearLocalStorageButton').click(function() {
+        var r = confirm("Are you sure you want to delete the local storage data?");
+        if (r == true) {
+          localStorage.setItem($('#studentNameSelect').val(), JSON.stringify([]));
+        }
+      });
     
       $('#addNewEntryButton').click(function() {
           $('#progressView').css('display', 'none');
