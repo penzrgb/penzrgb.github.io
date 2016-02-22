@@ -17,8 +17,12 @@
   <div id="container">
     <div id="header">
       <h1>Distributed Study Tracking Tool</h1>
-      <a id="addNewEntryButton" href="#" class="btn btn-success" role="button">Add New Entry</a>
+      <a id="addNewEntryButton" href="#" class="btn btn-success" role="button">Add New Time Entry</a>
+      <a id="addNewGradeButton" href="#" class="btn btn-success" role="button">Add New Grade</a>
       <a id="unsavedEntriesButton" href="#" class="btn btn-info" role="button" style="display: none;">Unsaved Local Data</a>
+      <div>
+        <p>Student Name: <select id="studentNameSelect" name="studentNameSelect"></select></p>
+      </div>
     </div>
 
     <div id="progressView" class="content">
@@ -53,14 +57,37 @@
           complete: function(data){
             console.log('complete');
             var dataObject = JSON.parse(data.responseText);
+
+            for (var i = 0; i < dataObject.students.length; i++) {
+              $('#studentNameSelect').append($('<option>', {
+                value: dataObject.students[i].id,
+                text: dataObject.students[i].name
+              }));
+            }
+
             for (var i = 0; i < dataObject.courses.length; i++) {
-              $('#progressView').append('<p>' + dataObject.courses[i].title + '</p>');
-              $('#progressView').append('<div class="progress center-block" style="width: 50%;">' +
-                  '<div class="progress-bar" role="progressbar" aria-valuenow="' +
-                  dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
-                  'aria-valuemax="' + dataObject.courses[i].maxHours + 
-                  '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
-                  '<span class="sr-only">Hours</span></div></div>');
+              $('#progressView').append('<div class="courseInfoContainer"><div class="courseTitleBlock">' + dataObject.courses[i].title + '</div>' +
+              '<div class="courseInfoBlock">' + 
+              '<div class="courseInfoBarBlock">Hours Logged: <div class="progress center-block" style="width: 50%;">' +
+                '<div class="progress-bar" role="progressbar" aria-valuenow="' +
+                dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
+                'aria-valuemax="' + dataObject.courses[i].maxHours + 
+                '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
+                '<span class="sr-only">Hours</span></div></div></div>' + 
+                '<div class="courseInfoBarBlock">Average Grade: <div class="progress center-block" style="width: 50%;">' +
+                '<div class="progress-bar" role="progressbar" aria-valuenow="' +
+                dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
+                'aria-valuemax="' + dataObject.courses[i].maxHours + 
+                '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
+                '<span class="sr-only">Hours</span></div></div></div>' + 
+                '<div class="courseInfoBarBlock">Total Grade: <div class="progress center-block" style="width: 50%;">' +
+                '<div class="progress-bar" role="progressbar" aria-valuenow="' +
+                dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
+                'aria-valuemax="' + dataObject.courses[i].maxHours + 
+                '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
+                '<span class="sr-only">Hours</span></div></div></div>' + 
+
+                '</div></div>');
 
               $('#classTitleSelect').append($('<option>', {
                 value: dataObject.courses[i].id,

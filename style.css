@@ -8,16 +8,20 @@ h1 {
   font-family: 'Roboto Mono' ;
   color: white;
 }
+
 p {
   font-size: 3vh;
   font-family: 'Roboto Mono' ;
   color: white;
 }
 
+.content { 
+  margin-top: 50px;
+}
+
 .content p {
   font-size: 2vh;
   text-align:center;
-  margin-top: 50px;
   margin-bottom: 50px;
   font-family: 'Roboto Mono' ;
   color: white;
@@ -31,6 +35,33 @@ p {
   color: black;
 }
 
+.courseInfoContainer {
+  margin: 20px;
+  vertical-align: middle;
+}
+
+.courseTitleBlock {
+  font-size: 18pt;
+  display: inline-block;
+  text-align: center;
+  width: 300px;
+  vertical-align: middle;
+}
+
+.courseInfoBlock {
+  font-size: 12pt;
+  text-align: center;
+  display: inline-block;
+  max-width: 600px;
+  vertical-align: middle;
+}
+
+.courseInfoBarBlock {
+  display: inline-block;
+  max-width: 200px;
+  min-width: 100px;
+  width: 200px;    /* Firefox/Gecko */
+}
 
 #container{
   text-align:center;
