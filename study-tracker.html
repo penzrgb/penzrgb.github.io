@@ -162,6 +162,39 @@
 
           clearInterval(entryInterval);
           entryInterval = null;
+
+          var timeNow = new Date();
+
+          if ('localStorage' in window && window['localStorage'] !== null) {
+              try {
+                  var userData = [];
+                  if (localStorage.getItem($('#studentNameSelect').val()) != null) {
+                    userData = JSON.parse(localStorage.getItem($('#studentNameSelect').val()));
+                  }
+
+                  var entry = {
+                      courseId: $("#classTitleSelect").val(),
+                      dateStarted: dateStarted,
+                      dateEnded: timeNow,
+                      taskName: $("#taskNameText").val(),
+                      taskDescription: $("#taskDescriptionText").val(),
+                      selfStudy: $("#selfStudyCheckbox").val()
+                  };
+
+                  userData.push(entry);
+
+                  localStorage.setItem($('#studentNameSelect').val(), JSON.stringify(userData));
+                  alert("The data was saved.");
+                  return true;
+              } catch (e) {
+                  if (e == QUOTA_EXCEEDED_ERR) {
+                      alert('Quota exceeded!');
+                  }
+              }
+          } else {
+              alert('Cannot store user preferences as your browser do not support local storage');
+          }
+
           unsavedItems++;
 
           if (unsavedItems > 0) {
