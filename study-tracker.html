@@ -96,9 +96,9 @@
                   '<div class="courseInfoBlock">' + 
                   '<div class="courseInfoBarBlock">Hours Logged: <div class="progress center-block" style="width: 50%;">' +
                     '<div class="progress-bar" role="progressbar" aria-valuenow="' +
-                    dataObject.courses[i].currentHours + '" aria-valuemin="0"' +
+                    getHoursForCourseId(dataObject.courses[i].id) + '" aria-valuemin="0"' +
                     'aria-valuemax="' + dataObject.courses[i].maxHours + 
-                    '" style="width: ' + (( dataObject.courses[i].currentHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
+                    '" style="width: ' + (( getHoursForCourseId(dataObject.courses[i].id) / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
                     '<span class="sr-only">Hours</span></div></div></div>' + 
                     '<div class="courseInfoBarBlock">Average Grade: <div class="progress center-block" style="width: 50%;">' +
                     '<div class="progress-bar" role="progressbar" aria-valuenow="' +
@@ -185,6 +185,23 @@
         }
 
         return "Unknown";
+      }
+
+      function getHoursForCourseId(id) {
+        if (cachedLogList != null) {
+          var seconds = 0;
+          for (var i = 0; i < cachedLogList.length; i++) {
+            if (cachedLogList[i].courseId == id) {
+              var dateStarted = new Date(cachedLogList[i].dateStarted);
+              var dateEnded = new Date(cachedLogList[i].dateEnded);
+              var diff = dateEnded.getTime() - dateStarted.getTime();
+              seconds += Math.abs(diff / 1000);
+            }
+          }
+
+          return seconds;
+        }
+        return -1;
       }
 
       $('.cancelTask').click(function() {
