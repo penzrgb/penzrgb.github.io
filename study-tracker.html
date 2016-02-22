@@ -175,7 +175,7 @@
                 '</tr>');
             }
 
-            localStorage.setItem($('#studentNameSelect').val(), dataObjects);
+            localStorage.setItem($('#studentNameSelect').val(), JSON.stringify(dataObjects));
           }
 
           $('#unsavedLocalDataView').css('display', 'block');
