@@ -49,7 +49,7 @@
   <script type="text/javascript">
     var dateStarted;
     var entryInterval;
-    var unsavedItems = 3;
+    var unsavedItems = 0;
 
     $.ajax({
           url: 'http://rodger.io/course-list.html',
@@ -94,7 +94,10 @@
                 text: dataObject.courses[i].title
               }));
 
-              if (unsavedItems > 0) {
+              if ('localStorage' in window && window['localStorage'] !== null && 
+                $('#studentNameSelect').val() !== null &&
+                localStorage.getItem($('#studentNameSelect').val()) != null &&
+                (unsavedItems = JSON.parse(localStorage.getItem($('#studentNameSelect').val())).length) > 0) {
                 $('#unsavedEntriesButton').html('Unsaved Local Data (' + unsavedItems.toString() + ')');
                 $('#unsavedEntriesButton').css('display', 'inline-block');
               }
@@ -184,8 +187,6 @@
                   userData.push(entry);
 
                   localStorage.setItem($('#studentNameSelect').val(), JSON.stringify(userData));
-                  alert("The data was saved.");
-                  return true;
               } catch (e) {
                   if (e == QUOTA_EXCEEDED_ERR) {
                       alert('Quota exceeded!');
@@ -195,9 +196,10 @@
               alert('Cannot store user preferences as your browser do not support local storage');
           }
 
-          unsavedItems++;
-
-          if (unsavedItems > 0) {
+          if ('localStorage' in window && window['localStorage'] !== null && 
+              $('#studentNameSelect').val() !== null &&
+              localStorage.getItem($('#studentNameSelect').val()) != null &&
+              (unsavedItems = JSON.parse(localStorage.getItem($('#studentNameSelect').val())).length) > 0) {
             $('#unsavedEntriesButton').html('Unsaved Local Data (' + unsavedItems.toString() + ')');
             $('#unsavedEntriesButton').css('display', 'inline-block');
           }
@@ -205,7 +207,6 @@
           {
             $('#unsavedEntriesButton').css('display', 'none');
           }
-
         }
       });
 
