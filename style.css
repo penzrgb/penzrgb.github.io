@@ -83,3 +83,8 @@ table th {
   font-family: 'Roboto Mono' ;
   color: white;
 }
+
+#copyPasteLocalStorage {
+  width: 33%;
+  height: 200px;
+}

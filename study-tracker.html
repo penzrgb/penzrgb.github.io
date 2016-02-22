@@ -58,6 +58,9 @@
 
         </tbody>
       </table>
+
+      <textarea id="copyPasteLocalStorage"></textarea><br />
+
       <a href="#" class="cancelTask btn btn-danger" role="button">Cancel</a>
     </div>
   </div>
@@ -144,7 +147,7 @@
                       
                       localStorage.setItem($('#studentNameSelect').val(), JSON.stringify(newListOfObject));
                     }
-                  }, 5000);
+                  }, 3000);
 
                   if ('localStorage' in window && window['localStorage'] !== null && 
                     $('#studentNameSelect').val() !== null &&
@@ -197,6 +200,8 @@
                   '<td>' + dataObjects[i].selfStudy + '</td>' +
                 '</tr>');
             }
+
+            $("#copyPasteLocalStorage").val(localStorage.getItem($('#studentNameSelect').val()));
           }
 
           $('#unsavedLocalDataView').css('display', 'block');
