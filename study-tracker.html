@@ -121,6 +121,31 @@
                     text: dataObject.courses[i].title
                   }));
 
+                  // Clear out local storage if it has been uploaded  
+                  setTimeout(function() { 
+                    if ('localStorage' in window && window['localStorage'] !== null && 
+                      $('#studentNameSelect').val() !== null &&
+                      localStorage.getItem($('#studentNameSelect').val()) != null) 
+                    {
+                      var dataObjects = JSON.parse(localStorage.getItem($('#studentNameSelect').val()));
+                      var logListForUser = getLogListForUser($('#studentNameSelect').val());
+                      var newListOfObject = [];
+                      
+                      for (var i = 0; i < dataObjects.length; i++) {
+                        var inLocalStorage = false;
+                        for (var j = 0; j < logListForUser.length; j++) {
+                          if (objectEquals(logListForUser[j], dataObjects[i])) {
+                            inLocalStorage = true;
+                          }
+                        }
+                        if (!inLocalStorage)
+                          newListOfObject.push(dataObjects[i]);
+                      }
+                      
+                      localStorage.setItem($('#studentNameSelect').val(), JSON.stringify(newListOfObject));
+                    }
+                  }, 5000);
+
                   if ('localStorage' in window && window['localStorage'] !== null && 
                     $('#studentNameSelect').val() !== null &&
                     localStorage.getItem($('#studentNameSelect').val()) != null &&
@@ -163,8 +188,6 @@
           {
             var dataObjects = JSON.parse(localStorage.getItem($('#studentNameSelect').val()));
 
-            dataObjects = _.difference(dataObjects, getLogListForUser($('#studentNameSelect').val()));
-
             for (var i = 0; i < dataObjects.length; i++) {
               $('#unsavedLocalDataTbody').append('<tr><td>' + getCourseTitleFromId(dataObjects[i].courseId) + '</td>' + 
                   '<td>' + new Date(dataObjects[i].dateStarted).toLocaleTimeString() + '</td>' +
@@ -174,12 +197,27 @@
                   '<td>' + dataObjects[i].selfStudy + '</td>' +
                 '</tr>');
             }
-
-            localStorage.setItem($('#studentNameSelect').val(), JSON.stringify(dataObjects));
           }
 
           $('#unsavedLocalDataView').css('display', 'block');
         });
+
+
+      function objectEquals(obj1, obj2) {
+        for (var i in obj1) {
+            if (obj1.hasOwnProperty(i)) {
+                if (!obj2.hasOwnProperty(i)) return false;
+                if (obj1[i] != obj2[i]) return false;
+            }
+        }
+        for (var i in obj2) {
+            if (obj2.hasOwnProperty(i)) {
+                if (!obj1.hasOwnProperty(i)) return false;
+                if (obj1[i] != obj2[i]) return false;
+            }
+        }
+        return true;
+    }
 
       function getCourseTitleFromId(id) {
         if (cachedCourseList != null) {
