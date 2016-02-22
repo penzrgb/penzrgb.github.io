@@ -15,6 +15,17 @@ p {
   color: white;
 }
 
+table td {
+  padding: 10px;
+}
+
+table th {
+  padding: 10px;
+  text-align: center;
+  font-size: 14pt;
+}
+
+
 .content { 
   margin-top: 50px;
 }

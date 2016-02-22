@@ -42,6 +42,21 @@
     </div>
 
     <div id="unsavedLocalDataView" class="content" style="display:none">
+      <table id="unsavedLocalData" align="center" cellpadding="10">
+        <thead>
+          <tr>
+            <th>Course Title</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Task Name</th>
+            <th>Task Description</th>
+            <th>Self Study</th>
+          </tr>
+        </thead>
+        <tbody id="unsavedLocalDataTbody">
+
+        </tbody>
+      </table>
       <a href="#" class="cancelTask btn btn-danger" role="button">Cancel</a>
     </div>
   </div>
@@ -50,6 +65,7 @@
     var dateStarted;
     var entryInterval;
     var unsavedItems = 0;
+    var cachedCourseList = null;
 
     $.ajax({
           url: 'http://rodger.io/course-list.html',
@@ -57,6 +73,7 @@
           complete: function(data){
             console.log('complete');
             var dataObject = JSON.parse(data.responseText);
+            cachedCourseList = dataObject;
 
             for (var i = 0; i < dataObject.students.length; i++) {
               $('#studentNameSelect').append($('<option>', {
@@ -123,11 +140,38 @@
           $('#addNewEntryView').css('display', 'none');
 
           // Clear out the old contents.
-          //$('#unsavedLocalDataView').html('');
+          $('#unsavedLocalDataTbody').empty();
+
+          if ('localStorage' in window && window['localStorage'] !== null && 
+            $('#studentNameSelect').val() !== null &&
+            localStorage.getItem($('#studentNameSelect').val()) != null) 
+          {
+            var dataObjects = JSON.parse(localStorage.getItem($('#studentNameSelect').val()));
+            for (var i = 0; i < dataObjects.length; i++) {
+              $('#unsavedLocalDataTbody').append('<tr><td>' + getCourseTitleFromId(dataObjects[i].courseId) + '</td>' + 
+                  '<td>' + new Date(dataObjects[i].dateStarted).toLocaleTimeString() + '</td>' +
+                  '<td>' + new Date(dataObjects[i].dateEnded).toLocaleTimeString() + '</td>' +
+                  '<td>' + dataObjects[i].taskName + '</td>' +
+                  '<td>' + dataObjects[i].taskDescription + '</td>' +
+                  '<td>' + dataObjects[i].selfStudy + '</td>' +
+                '</tr>');
+            }
+          }
 
           $('#unsavedLocalDataView').css('display', 'block');
         });
 
+      function getCourseTitleFromId(id) {
+        if (cachedCourseList != null) {
+          for (var i = 0; i < cachedCourseList.courses.length; i++) {
+            if (cachedCourseList.courses[i].id == id) {
+              return cachedCourseList.courses[i].title;
+            }
+          }
+        }
+
+        return "Unknown";
+      }
 
       $('.cancelTask').click(function() {
           $('#progressView').css('display', 'block');
@@ -181,16 +225,14 @@
                       dateEnded: timeNow,
                       taskName: $("#taskNameText").val(),
                       taskDescription: $("#taskDescriptionText").val(),
-                      selfStudy: $("#selfStudyCheckbox").val()
+                      selfStudy: $("#selfStudyCheckbox").prop('checked')
                   };
 
                   userData.push(entry);
 
                   localStorage.setItem($('#studentNameSelect').val(), JSON.stringify(userData));
               } catch (e) {
-                  if (e == QUOTA_EXCEEDED_ERR) {
-                      alert('Quota exceeded!');
-                  }
+                  alert('Error occured saving to the local storage! :(');
               }
           } else {
               alert('Cannot store user preferences as your browser do not support local storage');
