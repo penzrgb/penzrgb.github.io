@@ -281,6 +281,25 @@
             }
           }
 
+          if ('localStorage' in window && window['localStorage'] !== null) {
+            try {
+              var userData = [];
+              if (localStorage.getItem(user) != null) {
+                userData = JSON.parse(localStorage.getItem(user));
+                for (var i = 0; i < userData.length; i++) {
+                  if (userData[i].courseId == id) {
+                    var dateStarted = new Date(userData[i].dateStarted);
+                    var dateEnded = new Date(userData[i].dateEnded);
+                    var diff = dateEnded.getTime() - dateStarted.getTime();
+                    seconds += Math.abs(diff / 1000);
+                  }
+                }
+              }
+            }
+            catch (e) {
+            }
+          }
+
           return ((seconds / 60.0) / 60.0);
         }
         return -1;
