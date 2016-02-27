@@ -18,7 +18,6 @@
     <div id="header">
       <h1>Distributed Study Tracking Tool</h1>
       <a id="addNewEntryButton" href="#" class="btn btn-success" role="button">Add New Time Entry</a>
-      <a id="addNewGradeButton" href="#" class="btn btn-success" role="button">Add New Grade</a>
       <a id="unsavedEntriesButton" href="#" class="btn btn-info" role="button" style="display: none;">Unsaved Local Data</a>
       <div>
         <p>Student Name: <select id="studentNameSelect" name="studentNameSelect"></select></p>
@@ -104,19 +103,6 @@
                     'aria-valuemax="' + dataObject.courses[i].maxHours + 
                     '" style="width: ' + (( getHoursForCourseId($("#studentNameSelect").val(), dataObject.courses[i].id) / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
                     '<span class="sr-only">Hours</span></div></div></div>' + 
-                    '<div class="courseInfoBarBlock">Average Grade: <div class="progress center-block" style="width: 50%;">' +
-                    '<div class="progress-bar" role="progressbar" aria-valuenow="' +
-                    dataObject.courses[i].maxHours + '" aria-valuemin="0"' +
-                    'aria-valuemax="' + dataObject.courses[i].maxHours + 
-                    '" style="width: ' + (( dataObject.courses[i].maxHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
-                    '<span class="sr-only">Hours</span></div></div></div>' + 
-                    '<div class="courseInfoBarBlock">Total Grade: <div class="progress center-block" style="width: 50%;">' +
-                    '<div class="progress-bar" role="progressbar" aria-valuenow="' +
-                    dataObject.courses[i].maxHours + '" aria-valuemin="0"' +
-                    'aria-valuemax="' + dataObject.courses[i].maxHours + 
-                    '" style="width: ' + (( dataObject.courses[i].maxHours / dataObject.courses[i].maxHours ) * 100).toString() + '%;">' +
-                    '<span class="sr-only">Hours</span></div></div></div>' + 
-
                     '</div></div>');
 
                   $('#classTitleSelect').append($('<option>', {
